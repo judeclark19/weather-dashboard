@@ -64,7 +64,11 @@ $(function () {
       url: forecastQueryURL,
       method: "GET",
     }).then(function (response) {
-      console.log(response.daily);
+    var unixSeconds = response.daily[1].dt
+    var unixMilliseconds = unixSeconds*1000
+    var forecastDateUnix = new Date(unixMilliseconds);
+    var forecastDoW = forecastDateUnix.toLocaleString("en-US", {weekday: "long"})
+    console.log(forecastDoW)
     });
   });
 });
