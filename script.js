@@ -23,7 +23,8 @@ $(function () {
     }).then(function (response) {
 
       //Display header showing City, Date, Icon TODO: add today's date
-      currentCityNameEl = $("<h4>").text(response.name+" ("+todaysDate+")")
+      currentCityNameEl = $("#header-text")
+      currentCityNameEl.text(response.name+" ("+todaysDate+")")
       currentIconEl = $("<img>").attr("src",
       "http://openweathermap.org/img/wn/" + response.weather[0].icon + ".png"
     );
@@ -34,13 +35,16 @@ $(function () {
       currentTempEl = $("<p>").text(
         "Temperature: " + Math.round(response.main.temp) + " °F"
       );
+      currentHumidityEl = $("<p>").text(
+        "Humidity: " + response.main.humidity + "%"
+      );
+      currentWindEl = $("<p>").text(
+        "Wind speed: " + Math.round(response.wind.speed) + " MPH"
+      )
+      //append them all together
+      $("#current-weather-data").append(currentTempEl, currentHumidityEl, currentWindEl)
 
-      $("#current-weather-data").append(currentTempEl)
-
-      $("#current-humidity").text("Humidity: " + response.main.humidity + "%");
-
-      $("#wind-speed").text("Wind speed: " + Math.round(response.wind.speed) + " MPH");
-
+    //Grabbing variables with which to call for the UV index
       var latitude = response.coord.lat;
       var longitude = response.coord.lon;
 
@@ -57,9 +61,15 @@ $(function () {
         url: currentUVQueryURL,
         method: "GET",
       }).then(function (response) {
-        $("#current-uv").text("UV Index: ");
-        $("#uv-color").text(response.value);
+
+        currentUVLabel = $("<span>").text("UV Index: ");
+        currentUVBadge = $("<span>").text(response.value);
+
+        $("#current-weather-data").append(currentUVLabel, currentUVBadge)
+        
         //TODO: UV index colors
+
+
       });
 
       //Forecast call
