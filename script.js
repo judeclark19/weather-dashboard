@@ -16,22 +16,20 @@ $(function () {
       "&units=imperial&appid=" +
       apiKey;
 
-    //Current weather API Calls
+    //API Calls begin
     $.ajax({
       url: currentWeatherQueryURL,
       method: "GET",
     }).then(function (response) {
-      // console.log(currentWeatherQueryURL);
 
-      //Display header showing City, Date, Icon
+      //Display header showing City, Date, Icon TODO: add today's date
       currentCityNameEl = $("<h4>").text(response.name+" ("+todaysDate+")")
-      $("#header-row").append(currentCityNameEl)
-      
-      //TODO: add today's date
-      $("#current-weather-icon").attr(
-        "src",
-        "http://openweathermap.org/img/wn/" + response.weather[0].icon + ".png"
-      );
+      currentIconEl = $("<img>").attr("src",
+      "http://openweathermap.org/img/wn/" + response.weather[0].icon + ".png"
+    );
+
+      $("#header-row").append(currentCityNameEl, currentIconEl)
+  
 
       $("#current-temp").text(
         "Temperature: " + Math.round(response.main.temp) + " °F"
