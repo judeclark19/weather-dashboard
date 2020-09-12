@@ -20,7 +20,7 @@
         <div class="col-sm-4" id="search-sidebar"><h5 class="card-title">Search for a city name:</h5>
             <form class="form-inline" id="search-history">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+                <button class="btn btn-outline-info my-2 my-sm-0" type="submit" id="search-btn">Search</button>
               </form>
 
               <!-- Search history list -->
@@ -51,6 +51,7 @@
           </div>
           <div class="row" id="forecast-title"><h4>5-day Forecast</h4></div>
           <div class="row" id="forecast-row">
+            <!-- These are dynamically created in JS. This is a reference -->
             <div class="card forecast card-body">
                   <h5>tomorrow</h5>
                   <hr />

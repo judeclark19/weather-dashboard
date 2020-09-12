@@ -3,6 +3,11 @@ $(function () {
   const apiKey = "593c0385215d05c9409439d0b1361f3e";
   var cityName = "Atlanta"; //TODO: make dynamic
 
+  $("#search-btn").on("click", showWeather)
+
+  function showWeather() {
+    event.preventDefault();
+    
   var currentWeatherQueryURL =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     cityName +
@@ -62,28 +67,18 @@ $(function () {
       apiKey;
 
     console.log(forecastQueryURL);
+// beginning of forecast call
 
     $.ajax({
       url: forecastQueryURL,
       method: "GET",
     }).then(function (response) {
-     
       //Loop to create forecast cards (starting on index 1 because 0 is today and we don't need today)
       for (let i = 1; i < forecastArray.length + 1; i++) {
         //create div class card forecast-card-body
+        var forecastCard = $("<div class='card forecast card-body'");
         // create h5 DoW
-        // create hr
-        // create p to hold icon
-          //create icon and apppend
-        //create P to hold temp
-        //create p to hold humidity
-
-        //append Ps to .forecast-card-body
-        //append .forecast-card-body to .card
-        //append card to #forecast-row
-
-
-
+        var forecastDayEl = $("<h5>");
         //get day of week
         var unixSeconds = response.daily[i].dt;
         var unixMilliseconds = unixSeconds * 1000;
@@ -91,20 +86,31 @@ $(function () {
         var forecastDoW = forecastDateUnix.toLocaleString("en-US", {
           weekday: "long",
         });
-        console.log(forecastDoW);
+        forecastDayEl.text(forecastDoW);
 
-        //get weather icon
-        console.log(response.daily[i].weather[0].icon);
-        // "http://openweathermap.org/img/wn/" + response.daily[1].weather[0].icon + ".png"
+        // create hr
+        var hrLine = $("<hr />")
 
-         //get temp
-      console.log(
-        parseInt(response.daily[i].temp.day)
-        );
+        // create p to hold icon
+        var iconPara = $("<p>")
+        //create icon and append
+        var iconImg = $("<img>")
+        iconImg.attr("src", "http://openweathermap.org/img/wn/" + response.daily[1].weather[0].icon + ".png")
+        iconPara.append(iconImg);
 
-        //get humidity
-      console.log(response.daily[i].humidity);
+        //create P to hold temp
+        var tempPara = $("<p>").text(parseInt(response.daily[i].temp.day));
+        //create p to hold humidity
+        var humidPara = $("<p>").text(response.daily[i].humidity)
+        //append Ps to .forecast
+        forecastCard.append(forecastDayEl, forecastDoW, hrLine, iconPara, tempPara, humidPara)
+        
+        //append card to #forecast-row
+        $("#forecast-row").append(forecastCard)
       }
     });
+// end of forecast call
+
   });
+}
 });
