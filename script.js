@@ -22,7 +22,7 @@ $(function () {
       "http://openweathermap.org/img/wn/" + response.weather[0].icon + ".png"
     );
 
-    $("#current-temp").text("Temperature: " + response.main.temp + " °F");
+    $("#current-temp").text("Temperature: " + parseInt(response.main.temp) + " °F");
 
     $("#current-humidity").text("Humidity: " + response.main.humidity + "%");
 
@@ -51,7 +51,7 @@ $(function () {
 
     //Forecast call
     var forecastQueryURL =
-      "https://api.openweathermap.org/data/2.5/onecall?lat=" +
+      "https://api.openweathermap.org/data/2.5/onecall?units=imperial&lat=" +
       latitude +
       "&lon=" +
       longitude +
@@ -64,11 +64,23 @@ $(function () {
       url: forecastQueryURL,
       method: "GET",
     }).then(function (response) {
+        //get day of week
     var unixSeconds = response.daily[1].dt
     var unixMilliseconds = unixSeconds*1000
     var forecastDateUnix = new Date(unixMilliseconds);
     var forecastDoW = forecastDateUnix.toLocaleString("en-US", {weekday: "long"})
     console.log(forecastDoW)
+
+    //get weather icon
+    console.log(response.daily[1].weather[0].icon)
+    // "http://openweathermap.org/img/wn/" + response.daily[1].weather[0].icon + ".png"
+
+    //get temp
+    console.log(response.daily[1].temp.day)
+
+    //get humidity
+    console.log(response.daily[1].humidity)
+    
     });
   });
 });
