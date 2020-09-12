@@ -16,8 +16,10 @@ $(function () {
     console.log(mainQueryURL);
 
     $("#current-city-name").text(response.name)
+    $("#current-weather-icon").attr("src", "http://openweathermap.org/img/wn/"+response.weather[0].icon+".png")
 
-    console.log(response.weather[0].icon);
+
+    console.log(response.weather[0].icon+".png");
     console.log("Temp in F: " + response.main.temp);
     console.log("Humidity: " + response.main.humidity + "%");
     console.log("Wind speed: " + response.wind.speed + " mph");

@@ -23,6 +23,11 @@ nav span {
     width: 100%;
 }
 
+#current-city-name{
+    margin: 0px;
+    /* TODO: svertical align */
+}
+
 #forecast-title {
     padding-left: 20px;
 }
