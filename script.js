@@ -8,7 +8,10 @@ $(function () {
 
   function showWeather() {
     event.preventDefault();
+    $("#header-row").empty();
+    $("#current-weather-data").empty();
     $("#forecast-row").empty();
+    
 
     var currentWeatherQueryURL =
       "https://api.openweathermap.org/data/2.5/weather?q=" +
@@ -23,13 +26,12 @@ $(function () {
     }).then(function (response) {
 
       //Display header showing City, Date, Icon TODO: add today's date
-      currentCityNameEl = $("#header-text")
-      currentCityNameEl.text(response.name+" ("+todaysDate+")")
+      cityNameAndDate = $("<h4>").text(response.name+" ("+todaysDate+")")
       currentIconEl = $("<img>").attr("src",
       "http://openweathermap.org/img/wn/" + response.weather[0].icon + ".png"
     );
 
-      $("#header-row").append(currentCityNameEl, currentIconEl)
+      $("#header-row").append(cityNameAndDate, currentIconEl)
   
       //Display weather data for the present moment
       currentTempEl = $("<p>").text(
@@ -61,6 +63,8 @@ $(function () {
         url: currentUVQueryURL,
         method: "GET",
       }).then(function (response) {
+
+        $("#forecast-title").text("5-day Forecast")
 
         currentUVLabel = $("<span>").text("UV Index: ");
         currentUVBadge = $("<span>").text(response.value);
