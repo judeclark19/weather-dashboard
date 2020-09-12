@@ -5,13 +5,22 @@ $(function () {
   var todaysDate = moment().format("D MMMM YYYY");
 
   $("#search-btn").on("click", showWeather);
+  $("#search-btn").on("click", populateSearchBar);
+
+  function populateSearchBar() {
+    // var inputEl = $("#city-input")
+    console.log($("#city-input").val());
+    
+    var aSearchTerm = $("<li>").text($("#city-input").val());
+    aSearchTerm.addClass("list-group-item")
+    $("#search-history-items").append(aSearchTerm);
+  }
 
   function showWeather() {
     event.preventDefault();
     $("#header-row").empty();
     $("#current-weather-data").empty();
     $("#forecast-row").empty();
-    
 
     var currentWeatherQueryURL =
       "https://api.openweathermap.org/data/2.5/weather?q=" +
@@ -24,15 +33,15 @@ $(function () {
       url: currentWeatherQueryURL,
       method: "GET",
     }).then(function (response) {
-
       //Display header showing City, Date, Icon TODO: add today's date
-      cityNameAndDate = $("<h4>").text(response.name+" ("+todaysDate+")")
-      currentIconEl = $("<img>").attr("src",
-      "http://openweathermap.org/img/wn/" + response.weather[0].icon + ".png"
-    );
+      cityNameAndDate = $("<h4>").text(response.name + " (" + todaysDate + ")");
+      currentIconEl = $("<img>").attr(
+        "src",
+        "http://openweathermap.org/img/wn/" + response.weather[0].icon + ".png"
+      );
 
-      $("#header-row").append(cityNameAndDate, currentIconEl)
-  
+      $("#header-row").append(cityNameAndDate, currentIconEl);
+
       //Display weather data for the present moment
       currentTempEl = $("<p>").text(
         "Temperature: " + Math.round(response.main.temp) + " °F"
@@ -42,11 +51,15 @@ $(function () {
       );
       currentWindEl = $("<p>").text(
         "Wind speed: " + Math.round(response.wind.speed) + " MPH"
-      )
+      );
       //append them all together
-      $("#current-weather-data").append(currentTempEl, currentHumidityEl, currentWindEl)
+      $("#current-weather-data").append(
+        currentTempEl,
+        currentHumidityEl,
+        currentWindEl
+      );
 
-    //Grabbing variables with which to call for the UV index
+      //Grabbing variables with which to call for the UV index
       var latitude = response.coord.lat;
       var longitude = response.coord.lon;
 
@@ -63,17 +76,14 @@ $(function () {
         url: currentUVQueryURL,
         method: "GET",
       }).then(function (response) {
-
-        $("#forecast-title").text("5-day Forecast")
+        $("#forecast-title").text("5-day Forecast");
 
         currentUVLabel = $("<span>").text("UV Index: ");
         currentUVBadge = $("<span>").text(response.value);
 
-        $("#current-weather-data").append(currentUVLabel, currentUVBadge)
-        
+        $("#current-weather-data").append(currentUVLabel, currentUVBadge);
+
         //TODO: UV index colors
-
-
       });
 
       //Forecast call
@@ -84,9 +94,6 @@ $(function () {
         longitude +
         "&exclude=current,minutely,hourly&appid=" +
         apiKey;
-
-      console.log(forecastQueryURL);
-      // beginning of forecast call
 
       $.ajax({
         url: forecastQueryURL,
@@ -124,15 +131,23 @@ $(function () {
           iconPara.append(iconImg);
 
           //create P to hold temp
-          var tempPara = $("<p>").text("Temp: "+
-            Math.round(response.daily[i].temp.day) + " °F"
+          var tempPara = $("<p>").text(
+            "Temp: " + Math.round(response.daily[i].temp.day) + " °F"
           );
 
           //create p to hold humidity
-          var humidPara = $("<p>").text("Humidity: "+response.daily[i].humidity+"%");
+          var humidPara = $("<p>").text(
+            "Humidity: " + response.daily[i].humidity + "%"
+          );
 
           //append it all together
-          forecastCard.append(forecastDayEl, hrLine, iconPara, tempPara, humidPara);
+          forecastCard.append(
+            forecastDayEl,
+            hrLine,
+            iconPara,
+            tempPara,
+            humidPara
+          );
           $("#forecast-row").append(forecastCard);
         }
       });
