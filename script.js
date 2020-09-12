@@ -68,10 +68,22 @@ $(function () {
       method: "GET",
     }).then(function (response) {
      
-      
-
       //Loop to create forecast cards (starting on index 1 because 0 is today and we don't need today)
       for (let i = 1; i < forecastArray.length + 1; i++) {
+        //create div class card forecast-card-body
+        // create h5 DoW
+        // create hr
+        // create p to hold icon
+          //create icon and apppend
+        //create P to hold temp
+        //create p to hold humidity
+
+        //append Ps to .forecast-card-body
+        //append .forecast-card-body to .card
+        //append card to #forecast-row
+
+
+
         //get day of week
         var unixSeconds = response.daily[i].dt;
         var unixMilliseconds = unixSeconds * 1000;
