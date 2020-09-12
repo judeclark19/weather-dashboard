@@ -2,11 +2,13 @@ $(function () {
   const forecastArray = ["Tomorrow", "day 2", "day 3", "day 4", "day  5"]; //might not need, this just hard code the number of days in the loops
   const apiKey = "593c0385215d05c9409439d0b1361f3e";
   var cityName = "Atlanta"; //TODO: make dynamic
+  var todaysDate = moment().format("D MMMM YYYY");
 
   $("#search-btn").on("click", showWeather);
 
   function showWeather() {
     event.preventDefault();
+    $("#forecast-row").empty();
 
     var currentWeatherQueryURL =
       "https://api.openweathermap.org/data/2.5/weather?q=" +
@@ -21,7 +23,10 @@ $(function () {
     }).then(function (response) {
       // console.log(currentWeatherQueryURL);
 
-      $("#current-city-name").text(response.name + " TODAY'S DATE");
+      //Display header showing City, Date, Icon
+      currentCityNameEl = $("<h4>").text(response.name+" ("+todaysDate+")")
+      $("#header-row").append(currentCityNameEl)
+      
       //TODO: add today's date
       $("#current-weather-icon").attr(
         "src",
@@ -73,7 +78,7 @@ $(function () {
         url: forecastQueryURL,
         method: "GET",
       }).then(function (response) {
-        //Loop to create forecast cards. See HTML for a reference of how this looks when built. (the loops tarts on index 1 because 0 is today and we don't need today)
+        //Loop to create forecast cards. See HTML file for a reference of how this looks when built. (the loops tarts on index 1 because 0 is today and we actually want to start with tomorrow)
         for (let i = 1; i < forecastArray.length + 1; i++) {
           //create card
           var forecastCard = $("<div class='card forecast card-body'>");
