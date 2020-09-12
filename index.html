@@ -17,7 +17,7 @@
       </nav>
     <div class="container" id="body-container">
       <div class="row">
-        <div class="col-sm-4" id="search-sidebar"><h4>Search for a city name:</h4>
+        <div class="col-sm-4" id="search-sidebar"><h5 class="card-title">Search for a city name:</h5>
             <form class="form-inline" id="search-history">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
@@ -33,13 +33,66 @@
         </div>
         <div class="col-sm-8" id="weather-dash">
           <div class="row">
-            <div class="card">
-                <div class="card-body col-sm-12" id="current-weather">
-                  Current weather conditions
+            <div class="card" id="current-weather">
+                <div class="card-body col-sm-12">
+                  <h4>City Name (weather icon)</h4>
+                  <hr />
+                  <p>Temperature</p>
+                  <p>Humidity</p>
+                  <p>Wind speed</p>
+                  <p>UV</p>
                 </div>
               </div>
           </div>
-          <div class="row" id="forecast">weather forecast</div>
+          <div class="row" id="forecast-title"><h4>5-day Forecast</h4></div>
+          <div class="row">
+            <div class="card">
+                <div class="forecast card-body">
+                  <h5>tomorrow</h5>
+                  <hr />
+                  <p>icon</p>
+                  <p>Temperature</p>
+                  <p>Humidity</p>
+                </div>
+              </div>
+              <div class="card">
+                <div class="forecast card-body">
+                  <h5>day 2</h5>
+                  <hr />
+                  <p>icon</p>
+                  <p>Temperature</p>
+                  <p>Humidity</p>
+                </div>
+              </div>
+              <div class="card">
+                <div class="forecast card-body">
+                  <h5>day 3</h5>
+                  <hr />
+                  <p>icon</p>
+                  <p>Temperature</p>
+                  <p>Humidity</p>
+                </div>
+              </div>
+              <div class="card">
+                <div class="forecast card-body">
+                  <h5>day 4</h5>
+                  <hr />
+                  <p>icon</p>
+                  <p>Temperature</p>
+                  <p>Humidity</p>
+                </div>
+              </div>
+              <div class="card">
+                <div class="forecast card-body">
+                  <h5>day 5</h5>
+                  <hr />
+                  <p>icon</p>
+                  <p>Temperature</p>
+                  <p>Humidity</p>
+                </div>
+              </div>
+            </div>
+        </div>
         </div>
       </div>
     </div>

@@ -1,8 +1,10 @@
 #search-sidebar {
-    border: 2px solid blue;
+    background-color: #f8f9fa;
+    padding: 15px;
 }
 
 #weather-dash{
+    /* padding: 15px; */
     border: 2px solid  hotpink;
 }
 
@@ -14,4 +16,19 @@ nav span {
 
 #search-history{
     margin-bottom: 15px;
+}
+
+#current-weather{
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+#forecast-title {
+    padding-left: 20px;
+}
+
+.forecast {
+    background-color: #0069da;
+    border-radius: 5px;
+    color: white;
 }
