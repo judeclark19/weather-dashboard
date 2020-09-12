@@ -30,10 +30,12 @@ $(function () {
 
       $("#header-row").append(currentCityNameEl, currentIconEl)
   
-
-      $("#current-temp").text(
+      //Display weather data for the present moment
+      currentTempEl = $("<p>").text(
         "Temperature: " + Math.round(response.main.temp) + " °F"
       );
+
+      $("#current-weather-data").append(currentTempEl)
 
       $("#current-humidity").text("Humidity: " + response.main.humidity + "%");
 
