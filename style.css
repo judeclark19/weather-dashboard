@@ -1,3 +1,17 @@
-h1 {
-    color: blue;
+#search-sidebar {
+    border: 2px solid blue;
+}
+
+#weather-dash{
+    border: 2px solid  hotpink;
+}
+
+nav span {
+    width: 100%!important;
+    text-align: center!important;
+    font-size: 30pt!important;
+}
+
+#search-history{
+    margin-bottom: 15px;
 }
