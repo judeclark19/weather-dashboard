@@ -1,4 +1,5 @@
 $(function () {
+  const forecastArray = ["Tomorrow", "day 2", "day 3", "day 4", "day  5"];
   const apiKey = "593c0385215d05c9409439d0b1361f3e";
   var cityName = "Atlanta"; //TODO: make dynamic
 
@@ -15,14 +16,16 @@ $(function () {
   }).then(function (response) {
     // console.log(currentWeatherQueryURL);
 
-    $("#current-city-name").text(response.name);
+    $("#current-city-name").text(response.name + " TODAY'S DATE");
     //TODO: add today's date
     $("#current-weather-icon").attr(
       "src",
       "http://openweathermap.org/img/wn/" + response.weather[0].icon + ".png"
     );
 
-    $("#current-temp").text("Temperature: " + parseInt(response.main.temp) + " °F");
+    $("#current-temp").text(
+      "Temperature: " + parseInt(response.main.temp) + " °F"
+    );
 
     $("#current-humidity").text("Humidity: " + response.main.humidity + "%");
 
@@ -64,23 +67,32 @@ $(function () {
       url: forecastQueryURL,
       method: "GET",
     }).then(function (response) {
+     
+      
+
+      //Loop to create forecast cards (starting on index 1 because 0 is today and we don't need today)
+      for (let i = 1; i < forecastArray.length + 1; i++) {
         //get day of week
-    var unixSeconds = response.daily[1].dt
-    var unixMilliseconds = unixSeconds*1000
-    var forecastDateUnix = new Date(unixMilliseconds);
-    var forecastDoW = forecastDateUnix.toLocaleString("en-US", {weekday: "long"})
-    console.log(forecastDoW)
+        var unixSeconds = response.daily[i].dt;
+        var unixMilliseconds = unixSeconds * 1000;
+        var forecastDateUnix = new Date(unixMilliseconds);
+        var forecastDoW = forecastDateUnix.toLocaleString("en-US", {
+          weekday: "long",
+        });
+        console.log(forecastDoW);
 
-    //get weather icon
-    console.log(response.daily[1].weather[0].icon)
-    // "http://openweathermap.org/img/wn/" + response.daily[1].weather[0].icon + ".png"
+        //get weather icon
+        console.log(response.daily[i].weather[0].icon);
+        // "http://openweathermap.org/img/wn/" + response.daily[1].weather[0].icon + ".png"
 
-    //get temp
-    console.log(response.daily[1].temp.day)
+         //get temp
+      console.log(
+        parseInt(response.daily[i].temp.day)
+        );
 
-    //get humidity
-    console.log(response.daily[1].humidity)
-    
+        //get humidity
+      console.log(response.daily[i].humidity);
+      }
     });
   });
 });
