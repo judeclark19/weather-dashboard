@@ -16,17 +16,17 @@ $(function () {
     console.log(mainQueryURL);
 
     $("#current-city-name").text(response.name)
+    //TODO: add today's date
     $("#current-weather-icon").attr("src", "http://openweathermap.org/img/wn/"+response.weather[0].icon+".png")
 
     $("#current-temp").text("Temperature: " + response.main.temp+" °F");
 
     $("#current-humidity").text("Humidity: " + response.main.humidity + "%")
-    console.log("Wind speed: " + response.wind.speed + " mph");
+
+    $("#wind-speed").text("Wind speed: " + response.wind.speed + " MPH")
 
     var latitude = response.coord.lat;
-    console.log("Latitude: " + latitude);
     var longitude = response.coord.lon;
-    console.log("Longitude: " + longitude);
 
     //api call for UV
     var UVQueryURL =
@@ -41,8 +41,8 @@ $(function () {
       url: UVQueryURL,
       method: "GET",
     }).then(function (response) {
-      console.log(UVQueryURL);
-      console.log("UV Index :" + response.value);
+        $("#current-uv").text("UV Index: " + response.value)
+        //TODO: UV index colors
     });
   });
 
