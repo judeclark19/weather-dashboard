@@ -74,40 +74,22 @@ $(function () {
       method: "GET",
     }).then(function (response) {
       //Loop to create forecast cards (starting on index 1 because 0 is today and we don't need today)
-      for (let i = 1; i < forecastArray.length + 1; i++) {
-        //create div class card forecast-card-body
-        var forecastCard = $("<div class='card forecast card-body'");
-        // create h5 DoW
-        var forecastDayEl = $("<h5>");
-        //get day of week
-        var unixSeconds = response.daily[i].dt;
-        var unixMilliseconds = unixSeconds * 1000;
-        var forecastDateUnix = new Date(unixMilliseconds);
-        var forecastDoW = forecastDateUnix.toLocaleString("en-US", {
-          weekday: "long",
-        });
-        forecastDayEl.text(forecastDoW);
+    for (let i=1; i<forecastArray.length+1; i++){
+      var forecastCard = $("<div class='card forecast card-body'>")
 
-        // create hr
-        var hrLine = $("<hr />")
+      var forecastDayEl = $("<h5>")
+      //get day of week
+      var unixSeconds = response.daily[i].dt;
+      var unixMilliseconds = unixSeconds * 1000;
+      var forecastDateUnix = new Date(unixMilliseconds);
+      var forecastDoW = forecastDateUnix.toLocaleString("en-US", {
+        weekday: "long",
+      });
+      forecastDayEl.text(forecastDoW);
 
-        // create p to hold icon
-        var iconPara = $("<p>")
-        //create icon and append
-        var iconImg = $("<img>")
-        iconImg.attr("src", "http://openweathermap.org/img/wn/" + response.daily[1].weather[0].icon + ".png")
-        iconPara.append(iconImg);
-
-        //create P to hold temp
-        var tempPara = $("<p>").text(parseInt(response.daily[i].temp.day));
-        //create p to hold humidity
-        var humidPara = $("<p>").text(response.daily[i].humidity)
-        //append Ps to .forecast
-        forecastCard.append(forecastDayEl, forecastDoW, hrLine, iconPara, tempPara, humidPara)
-        
-        //append card to #forecast-row
-        $("#forecast-row").append(forecastCard)
-      }
+      forecastCard.append(forecastDayEl)
+     $("#forecast-row").append(forecastCard)
+    }
     });
 // end of forecast call
 
