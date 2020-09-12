@@ -25,10 +25,10 @@ nav span {
 
 #current-city-name{
     margin: 0px;
-    /* TODO: svertical align */
+    /* TODO: vertical align */
 }
 
-#forecast-title {
+h4 {
     padding-left: 20px;
 }
 
