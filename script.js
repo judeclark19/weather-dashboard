@@ -19,8 +19,8 @@ $(function () {
     $("#current-weather-icon").attr("src", "http://openweathermap.org/img/wn/"+response.weather[0].icon+".png")
 
     $("#current-temp").text("Temperature: " + response.main.temp+" °F");
-    console.log("Temp in F: " + response.main.temp);
-    console.log("Humidity: " + response.main.humidity + "%");
+
+    $("#current-humidity").text("Humidity: " + response.main.humidity + "%")
     console.log("Wind speed: " + response.wind.speed + " mph");
 
     var latitude = response.coord.lat;
