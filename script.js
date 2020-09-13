@@ -4,8 +4,14 @@ $(function () {
   var cityName = "Atlanta"; //TODO: make dynamic
   var todaysDate = moment().format("D MMMM YYYY");
 
-  $("#search-btn").on("click", showWeather);
-  $("#search-btn").on("click", populateSearchBar);
+  // $("#search-btn").on("click", showWeather);
+  // $("#search-btn").on("click", populateSearchBar);
+  $("#search-btn").on("click", function(){
+    if ($("#city-input").val()){
+      showWeather();
+      populateSearchBar();
+    }
+  });
 
   function populateSearchBar() {
     // var inputEl = $("#city-input")
