@@ -4,14 +4,24 @@ $(function () {
   // var cityName = "Atlanta"; //TODO: make dynamic
   var cityName;
   var todaysDate = moment().format("D MMMM YYYY");
+  var inputSwitch;
+  var listCity;
 
 
   $("#search-btn").on("click", function(){
+    inputSwitch = true;
     if ($("#city-input").val()){
       showWeather();
       populateSearchBar();
     }
   });
+
+  $(document).on("click", ".list-group-item", function() {
+    inputSwitch = false;
+    listCity = $(this).text()
+    showWeather();
+    
+  })
 
   function populateSearchBar() {
     var aSearchTerm = $("<li>").text($("#city-input").val());
@@ -21,7 +31,27 @@ $(function () {
 
   function showWeather() {
     event.preventDefault();
-    cityName = $("#city-input").val()
+
+
+    //DEFINE CITY NAME HERE BASED ON CLICK
+
+    if(inputSwitch){
+      cityName = $("#city-input").val()
+    } else {
+      cityName = listCity
+    }
+    
+    // cityName = $("#city-input").val()
+
+
+console.log(inputSwitch);
+console.log(listCity)
+
+
+
+  // =======================================================
+
+
     $("#header-row").empty();
     $("#current-weather-data").empty();
     $("#forecast-row").empty();
