@@ -1,5 +1,6 @@
 $(function () {
   const forecastArray = ["Tomorrow", "day 2", "day 3", "day 4", "day  5"]; //might not need, this just hard code the number of days in the loops
+  var searchHistoryArray = [];
   const apiKey = "593c0385215d05c9409439d0b1361f3e";
   // var cityName = "Atlanta"; //TODO: make dynamic
   var cityName;
@@ -7,50 +8,48 @@ $(function () {
   var inputSwitch;
   var listCity;
 
+  //Click listeners
+  // ===========================================================================
 
-  $("#search-btn").on("click", function(){
+  //Listen to search button
+  $("#search-btn").on("click", function () {
     inputSwitch = true;
-    if ($("#city-input").val()){
+    if ($("#city-input").val()) {
       showWeather();
       populateSearchBar();
     }
   });
 
-  $(document).on("click", ".list-group-item", function() {
+  //listen to the items in the search history
+  $(document).on("click", ".list-group-item", function () {
     inputSwitch = false;
-    listCity = $(this).text()
+    listCity = $(this).text();
     showWeather();
-    
-  })
+  });
+  // ===========================================================================
 
   function populateSearchBar() {
-    var aSearchTerm = $("<li>").text($("#city-input").val());
-    aSearchTerm.addClass("list-group-item")
+    $("#search-history-items").empty();
+    searchHistoryArray.push($("#city-input").val());
+    console.log(searchHistoryArray);
+    localStorage.setItem("Search history", searchHistoryArray)
+
+    for (let i = 0; i < searchHistoryArray.length; i++) {
+      var aSearchTerm = $("<li>").text(searchHistoryArray[i]);
+      aSearchTerm.addClass("list-group-item");
     $("#search-history-items").prepend(aSearchTerm);
+    }
   }
 
   function showWeather() {
     event.preventDefault();
 
-
-    //DEFINE CITY NAME HERE BASED ON CLICK
-
-    if(inputSwitch){
-      cityName = $("#city-input").val()
+    //Get the name of the city to search based on whether the user clicked the save button or one of their previous searches
+    if (inputSwitch) {
+      cityName = $("#city-input").val();
     } else {
-      cityName = listCity
+      cityName = listCity;
     }
-    
-    // cityName = $("#city-input").val()
-
-
-console.log(inputSwitch);
-console.log(listCity)
-
-
-
-  // =======================================================
-
 
     $("#header-row").empty();
     $("#current-weather-data").empty();
@@ -67,14 +66,12 @@ console.log(listCity)
       url: currentWeatherQueryURL,
       method: "GET",
     }).then(function (response) {
-      console.log(currentWeatherQueryURL)
-      //Display header showing City, Date, Icon TODO: add today's date
+      //Display header showing City, Date, Icon
       cityNameAndDate = $("<h4>").text(response.name + " (" + todaysDate + ")");
       currentIconEl = $("<img>").attr(
         "src",
         "http://openweathermap.org/img/wn/" + response.weather[0].icon + ".png"
       );
-
       $("#header-row").append(cityNameAndDate, currentIconEl);
 
       //Display weather data for the present moment
