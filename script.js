@@ -1,11 +1,11 @@
 $(function () {
   const forecastArray = ["Tomorrow", "day 2", "day 3", "day 4", "day  5"]; //might not need, this just hard code the number of days in the loops
   const apiKey = "593c0385215d05c9409439d0b1361f3e";
-  var cityName = "Atlanta"; //TODO: make dynamic
+  // var cityName = "Atlanta"; //TODO: make dynamic
+  var cityName;
   var todaysDate = moment().format("D MMMM YYYY");
 
-  // $("#search-btn").on("click", showWeather);
-  // $("#search-btn").on("click", populateSearchBar);
+
   $("#search-btn").on("click", function(){
     if ($("#city-input").val()){
       showWeather();
@@ -14,16 +14,14 @@ $(function () {
   });
 
   function populateSearchBar() {
-    // var inputEl = $("#city-input")
-    console.log($("#city-input").val());
-    
     var aSearchTerm = $("<li>").text($("#city-input").val());
     aSearchTerm.addClass("list-group-item")
-    $("#search-history-items").append(aSearchTerm);
+    $("#search-history-items").prepend(aSearchTerm);
   }
 
   function showWeather() {
     event.preventDefault();
+    cityName = $("#city-input").val()
     $("#header-row").empty();
     $("#current-weather-data").empty();
     $("#forecast-row").empty();
@@ -39,6 +37,7 @@ $(function () {
       url: currentWeatherQueryURL,
       method: "GET",
     }).then(function (response) {
+      console.log(currentWeatherQueryURL)
       //Display header showing City, Date, Icon TODO: add today's date
       cityNameAndDate = $("<h4>").text(response.name + " (" + todaysDate + ")");
       currentIconEl = $("<img>").attr(
