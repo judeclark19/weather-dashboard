@@ -18,24 +18,26 @@ $(function () {
   //Listen to search button
   $("#search-btn").on("click", function () {
     event.preventDefault();
-   
+
     if (inputField.val() === "") {
       //if blank, do nothing
       return;
     } else {
-      var includes = searchHistoryArray.includes(inputField.val());
-      console.log(includes);
+      inputSwitch = true;
+      showWeather();
+      // var includes = searchHistoryArray.includes(inputField.val());
+      // console.log(includes);
 
-      if (includes) {
-        //if includes is true, show weather but do not populate
-        inputSwitch = true;
-        showWeather();
-      } else {
-        //if includes is false, add input to the array
-        inputSwitch = true;
-        populateSearchBar();
-        showWeather();
-      }
+      // if (includes) {
+      //   //if includes is true, show weather but do not populate
+      //   inputSwitch = true;
+      //   showWeather();
+      // } else {
+      //   //if includes is false, add input to the array
+      //   inputSwitch = true;
+      //   populateSearchBar();
+      //   showWeather();
+      // }
     }
   });
 
@@ -62,22 +64,6 @@ $(function () {
   }
   onLoad();
 
-  function populateSearchBar() {
-    $("#search-history-items").empty();
-
-    searchHistoryArray.push(inputField.val());
-    console.log("searchHistoryArray: " + searchHistoryArray);
-    localStorage.setItem("Weather search history", searchHistoryArray);
-    // var arrayFromStorage = localStorage.getItem("Weather search history").split(",");
-    console.log(arrayFromStorage);
-
-    for (let i = 0; i < searchHistoryArray.length; i++) {
-      var aSearchTerm = $("<li>").text(searchHistoryArray[i]);
-      aSearchTerm.addClass("list-group-item");
-      $("#search-history-items").prepend(aSearchTerm);
-    }
-  }
-
   function showWeather() {
     event.preventDefault();
 
@@ -103,7 +89,21 @@ $(function () {
       url: currentWeatherQueryURL,
       method: "GET",
     }).then(function (response) {
-//VALIDATE HERE: Check if city name is valid
+      //VALIDATE HERE: Check if city name is valid
+      //if response exists
+      if (response) {
+        console.log("the city name is ok");
+
+        if (searchHistoryArray.includes(cityName) === false) {
+          //if city name is not present in the array
+          populateSearchBar();
+        }
+      } else {
+        alert("not a valid city name");
+      }
+      //check if the city name is in the array already
+      // if response doesn't exist
+      //alert user
 
       //Display header showing City, Date, Icon
       cityNameAndDate = $("<h4>").text(response.name + " (" + todaysDate + ")");
@@ -225,4 +225,21 @@ $(function () {
       // end of forecast call
     });
   }
+  function populateSearchBar() {
+    $("#search-history-items").empty();
+
+    searchHistoryArray.push(inputField.val());
+    console.log("searchHistoryArray: " + searchHistoryArray);
+    localStorage.setItem("Weather search history", searchHistoryArray);
+    // var arrayFromStorage = localStorage.getItem("Weather search history").split(",");
+    console.log(arrayFromStorage);
+
+    for (let i = 0; i < searchHistoryArray.length; i++) {
+      var aSearchTerm = $("<li>").text(searchHistoryArray[i]);
+      aSearchTerm.addClass("list-group-item");
+      $("#search-history-items").prepend(aSearchTerm);
+    }
+  }
+
+
 });
