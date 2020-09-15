@@ -22,6 +22,11 @@ nav span {
     color: #343a40;
 }
 
+#list-container {
+    max-height:70vh;
+    overflow: auto;
+}
+
 .list-group-item:hover{
     /* color: red; */
     background-color: rgb(228, 230, 233);

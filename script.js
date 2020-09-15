@@ -31,6 +31,13 @@ $(function () {
     }
   });
 
+  //listen to clear button
+  $("#clear-btn").on("click", function () {
+    console.log("clear");
+    localStorage.removeItem("Weather search history");
+    location.reload();
+  });
+
   //listen to the items in the search history sidebar
   $(document).on("click", ".list-group-item", function () {
     inputSwitch = false;

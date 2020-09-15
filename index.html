@@ -20,15 +20,17 @@
         <div class="col-sm-4" id="search-sidebar"><h5 class="card-title">Search for a city name:</h5>
             <form class="form-inline" id="search-history">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="city-input">
-                <button class="btn btn-outline-info my-2 my-sm-0" type="submit" id="search-btn">Search</button>
+                <button class="btn btn-outline-info my-2 my-sm-0" type="submit" id="search-btn">Search</button><br /><br />
+                <button type="button" class="btn btn-secondary" id="clear-btn">Clear</button>
               </form>
 
               <!-- Search history list -->
+              <div id="list-container">
               <ul class="list-group" id="search-history-items">
                 <!-- <li class="list-group-item">Miami</li>
                 <li class="list-group-item">Albany</li>
                 <li class="list-group-item">Cleveland</li> -->
-              </ul>
+              </ul></div>
         </div>
         <div class="col-sm-8" id="weather-dash">
           <div class="row">
