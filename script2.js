@@ -8,9 +8,11 @@ $(function () {
   var todaysDate = moment().format("D MMMM YYYY");
   var inputSwitch;
   var listCity;
-  var arrayFromStorage = localStorage
+  if (localStorage.getItem("Weather search history")){
+    var arrayFromStorage = localStorage
     .getItem("Weather search history")
     .split(",");
+  }
 
   //Click listeners
   // ===========================================================================
@@ -52,13 +54,15 @@ $(function () {
   function onLoad() {
     $("#search-history-items").empty();
 
-    searchHistoryArray = arrayFromStorage;
+    if (arrayFromStorage){
+    searchHistoryArray = arrayFromStorage;}
 
     for (let i = 0; i < searchHistoryArray.length; i++) {
       var aSearchTerm = $("<li>").text(searchHistoryArray[i]);
       aSearchTerm.addClass("list-group-item");
       $("#search-history-items").prepend(aSearchTerm);
     }
+// }
     // console.log(typeof Object.values(localStorage))
     // console.log(JSON.parse(Object.values(localStorage)))
   }
@@ -231,7 +235,6 @@ $(function () {
     searchHistoryArray.push(inputField.val());
     console.log("searchHistoryArray: " + searchHistoryArray);
     localStorage.setItem("Weather search history", searchHistoryArray);
-    // var arrayFromStorage = localStorage.getItem("Weather search history").split(",");
     console.log(arrayFromStorage);
 
     for (let i = 0; i < searchHistoryArray.length; i++) {

@@ -8,9 +8,17 @@ $(function () {
   var todaysDate = moment().format("D MMMM YYYY");
   var inputSwitch;
   var listCity;
+
+if (localStorage.getItem("Weather search history")){
   var arrayFromStorage = localStorage
-    .getItem("Weather search history")
-    .split(",");
+  .getItem("Weather search history")
+  .split(",");
+}
+
+  // var arrayFromStorage = localStorage
+  //   .getItem("Weather search history")
+  //   .split(",");
+  // var arrayFromStorage = ["this", "is", "a", "fake", "array"]
 
   //Click listeners
   // ===========================================================================
