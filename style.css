@@ -46,8 +46,18 @@ nav span {
     width: 100%;
 }
 
-h4 {
+h4, h3{
     padding-left: 20px;
+}
+
+#header-row{
+    positon: relative;
+}
+
+#current-weather-icon{
+border: 2px solid red;
+position: absolute;
+right: 5vw;
 }
 
 .uv-low {
@@ -86,9 +96,13 @@ h4 {
 }
 
 .forecast {
-    background-color: #3FBAF8;
+    background-color: #3698DD;
+    margin: 3px;
     border-radius: 5px;
+    box-shadow: -1px 1px 12px 1px rgba(20,69,102,1);
     color: white;
 }
+
+
 
 /* TODO: float the current weather icon right */

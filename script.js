@@ -105,7 +105,7 @@ $(function () {
 
       //Display header showing City, Date, and Icon
       cityNameAndDate = $("<h4>").text(response.name + " (" + todaysDate + ")");
-      currentIconEl = $("<img>").attr(
+      currentIconEl = $("<img id='current-weather-icon'>").attr(
         "src",
         "https://openweathermap.org/img/wn/" + response.weather[0].icon + ".png"
       );
