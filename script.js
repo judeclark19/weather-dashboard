@@ -1,4 +1,6 @@
 $(function () {
+  //VARIABLES
+  //===========================================================================
   const numberOfDaysToForecast = 5;
   var searchHistoryArray = [];
   const apiKey = "593c0385215d05c9409439d0b1361f3e";
@@ -14,8 +16,9 @@ $(function () {
   } else {
     var arrayFromStorage;
   }
+  // ===========================================================================
 
-  //Click listeners
+  //EVENT LISTENERS
   // ===========================================================================
 
   //Listen to search button
@@ -46,10 +49,13 @@ $(function () {
   });
   // ===========================================================================
 
+  //FUNCTIONS
+  // ===========================================================================
+
+  //On page load, check local storage, and if there is a search history, display it.
   function onLoad() {
     $("#search-history-items").empty();
 
-    //if there is a search history in storage, display it
     if (arrayFromStorage) {
       searchHistoryArray = arrayFromStorage;
     }
@@ -65,7 +71,7 @@ $(function () {
   function showWeather() {
     event.preventDefault();
 
-    // retrieves a search term from either the search bar or one of the previous search history items, depending on what the user clicked. This is used in the query URL
+    // Input switch tells the program whether the user is typing in a new a search term  or clicking on one of the previous search history items. The search term will be used in the currentWeatherQueryURL
     if (inputSwitch) {
       cityName = inputField.val();
     } else {
@@ -88,8 +94,9 @@ $(function () {
       url: currentWeatherQueryURL,
       method: "GET",
     }).then(function (response) {
-      //Change the cityName from whatever the user typed in to what the API returns as the "name"
+      //Now that we've got a response, change the cityName from whatever the user typed in to what the API actually returns as the "name"
       cityName = response.name;
+
       //VALIDATION CHECK: Check if city name is valid =======================
       if (response) {
         if (searchHistoryArray.includes(cityName) === false) {
@@ -111,7 +118,7 @@ $(function () {
       );
       $("#header-row").append(cityNameAndDate, currentIconEl);
 
-      //Display weather data for the present moment
+      //Display current weather data
       currentTempEl = $("<p>").text(
         "Temperature: " + Math.round(response.main.temp) + " °F"
       );
@@ -132,7 +139,7 @@ $(function () {
       var latitude = response.coord.lat;
       var longitude = response.coord.lon;
 
-      //current UV API Call
+      //current UV index API Call
       var currentUVQueryURL =
         "https://api.openweathermap.org/data/2.5/uvi?appid=" +
         apiKey +
@@ -153,24 +160,22 @@ $(function () {
         //apply UV colors
         if (response.value < 3) {
           // green
-          currentUVBadge.addClass("uv-low");
+          currentUVBadge.addClass("uv uv-low");
         } else if (response.value >= 3 && response.value < 6) {
           //yellow
-          currentUVBadge.addClass("uv-med");
+          currentUVBadge.addClass("uv uv-med");
         } else if (response.value >= 6 && response.value < 8) {
           //orange
-          currentUVBadge.addClass("uv-high");
-        } else if (response.value >= 8 && response.value <=10) {
+          currentUVBadge.addClass("uv uv-high");
+        } else if (response.value >= 8 && response.value <= 10) {
           //red
-          currentUVBadge.addClass("uv-very-high");
+          currentUVBadge.addClass("uv uv-very-high");
         } else {
           //purple
-          currentUVBadge.addClass("uv-extreme");
+          currentUVBadge.addClass("uv uv-extreme");
         }
 
         $("#current-weather-data").append(currentUVLabel, currentUVBadge);
-
-        //TODO: UV index colors
       });
 
       //Forecast call
@@ -186,14 +191,14 @@ $(function () {
         url: forecastQueryURL,
         method: "GET",
       }).then(function (response) {
-        //Loop to create forecast cards. See HTML file for a reference of how this looks when built. (the loops tarts on index 1 because 0 is today and we actually want to start with tomorrow)
+        //Loop to create forecast cards. See HTML file for a reference of how this looks when built. (the loops tarts on index 1 because 0 is today I'm not trying to call today's weather)
         for (let i = 1; i < numberOfDaysToForecast + 1; i++) {
-          //create card
+          //create a card
           var forecastCard = $("<div class='card forecast card-body'>");
 
           //title of card: day of the week
           var forecastDayEl = $("<h5>");
-          //get day of week
+          //fetch unix timestamp and convert to day of the week
           var unixSeconds = response.daily[i].dt;
           var unixMilliseconds = unixSeconds * 1000;
           var forecastDateUnix = new Date(unixMilliseconds);

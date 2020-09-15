@@ -1,9 +1,3 @@
-
-/* #weather-dash{
-    padding: 15px;
-    border: 2px solid  hotpink;
-} */
-
 nav span {
     width: 100%!important;
     text-align: center!important;
@@ -37,6 +31,7 @@ nav span {
     color: #0069da;
     text-decoration: none;
 }
+
 #current-city-name{
     margin: 0px;
 }
@@ -46,53 +41,42 @@ nav span {
     width: 100%;
 }
 
-h4, h3{
+h4 {
     padding-left: 20px;
 }
 
-#header-row{
-    positon: relative;
-}
-
 #current-weather-icon{
-border: 2px solid red;
+    border: 2px dashed lightblue;
+    padding: 30px;
+    border-radius: 100px;
+    background-color: #f8f9fa;
 position: absolute;
 right: 5vw;
 }
 
-.uv-low {
-    background-color: #9CC601;
+.uv {
     color: white;
     padding: 5px;
     border-radius: 5px;
+}
+.uv-low {
+    background-color: #9CC601;
 }
 
 .uv-med {
     background-color: #F9BC01;
-    color: white;
-    padding: 5px;
-    border-radius: 5px;
 }
 
 .uv-high {
     background-color: #F89003;
-    color: white;
-    padding: 5px;
-    border-radius: 5px;
 }
 
 .uv-very-high {
     background-color: #F54F24;
-    color: white;
-    padding: 5px;
-    border-radius: 5px;
 }
 
 .uv-extreme {
     background-color: #9E47CC;
-    color: white;
-    padding: 5px;
-    border-radius: 5px;
 }
 
 .forecast {
@@ -102,7 +86,3 @@ right: 5vw;
     box-shadow: -1px 1px 12px 1px rgba(20,69,102,1);
     color: white;
 }
-
-
-
-/* TODO: float the current weather icon right */
