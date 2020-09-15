@@ -95,8 +95,7 @@ $(function () {
     }).then(function (response) {
       //VALIDATE HERE: Check if city name is valid
       //if response exists
-      if (response) {
-        console.log("the city name is ok");
+      if (response) { //if t
 
         if (searchHistoryArray.includes(cityName) === false) {
           //if city name is not present in the array
@@ -105,9 +104,6 @@ $(function () {
       } else {
         alert("not a valid city name");
       }
-      //check if the city name is in the array already
-      // if response doesn't exist
-      //alert user
 
       //Display header showing City, Date, Icon
       cityNameAndDate = $("<h4>").text(response.name + " (" + todaysDate + ")");
@@ -235,7 +231,6 @@ $(function () {
     searchHistoryArray.push(inputField.val());
     console.log("searchHistoryArray: " + searchHistoryArray);
     localStorage.setItem("Weather search history", searchHistoryArray);
-    console.log(arrayFromStorage);
 
     for (let i = 0; i < searchHistoryArray.length; i++) {
       var aSearchTerm = $("<li>").text(searchHistoryArray[i]);
