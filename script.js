@@ -111,7 +111,7 @@ $(function () {
       cityNameAndDate = $("<h4>").text(response.name + " (" + todaysDate + ")");
       currentIconEl = $("<img>").attr(
         "src",
-        "http://openweathermap.org/img/wn/" + response.weather[0].icon + ".png"
+        "https://openweathermap.org/img/wn/" + response.weather[0].icon + ".png"
       );
       $("#header-row").append(cityNameAndDate, currentIconEl);
 
@@ -138,7 +138,7 @@ $(function () {
 
       //current UV API Call
       var currentUVQueryURL =
-        "http://api.openweathermap.org/data/2.5/uvi?appid=" +
+        "https://api.openweathermap.org/data/2.5/uvi?appid=" +
         apiKey +
         "&lat=" +
         latitude +
