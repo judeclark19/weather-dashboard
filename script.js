@@ -3,6 +3,7 @@ $(function () {
   var searchHistoryArray = [];
   const apiKey = "593c0385215d05c9409439d0b1361f3e";
   // var cityName = "Atlanta"; //TODO: make dynamic
+  const inputField = $("#city-input");
   var cityName;
   var todaysDate = moment().format("D MMMM YYYY");
   var inputSwitch;
@@ -13,11 +14,35 @@ $(function () {
 
   //Listen to search button
   $("#search-btn").on("click", function () {
-    inputSwitch = true;
-    if ($("#city-input").val()) {
-      showWeather();
-      populateSearchBar();
-    }
+    event.preventDefault();
+    //Validations
+    //if blank, do nothing
+    //if not blank, check for presence in SHA
+    //if not present, add
+    //if present, do nothing
+    //input switch, showWeather, PopulateSearchBar
+if (inputField.val() === ""){ //if blank, do nothing
+  return
+} else {
+
+  var includes = searchHistoryArray.includes(inputField.val());
+  console.log(includes)
+
+  if (includes){ //if includes is true, show weather but do not populate
+    inputSwitch = true
+    showWeather();
+  } else {//if includes is false, add input to the array
+    inputSwitch = true
+    populateSearchBar();
+    showWeather();
+
+  }
+
+  
+
+}
+
+    
   });
 
   //listen to the items in the search history
@@ -30,14 +55,15 @@ $(function () {
 
   function populateSearchBar() {
     $("#search-history-items").empty();
-    searchHistoryArray.push($("#city-input").val());
+
+    searchHistoryArray.push(inputField.val());
     console.log(searchHistoryArray);
-    localStorage.setItem("Search history", searchHistoryArray)
+    localStorage.setItem("Search history", searchHistoryArray);
 
     for (let i = 0; i < searchHistoryArray.length; i++) {
       var aSearchTerm = $("<li>").text(searchHistoryArray[i]);
       aSearchTerm.addClass("list-group-item");
-    $("#search-history-items").prepend(aSearchTerm);
+      $("#search-history-items").prepend(aSearchTerm);
     }
   }
 
@@ -46,7 +72,7 @@ $(function () {
 
     //Get the name of the city to search based on whether the user clicked the save button or one of their previous searches
     if (inputSwitch) {
-      cityName = $("#city-input").val();
+      cityName = inputField.val();
     } else {
       cityName = listCity;
     }
