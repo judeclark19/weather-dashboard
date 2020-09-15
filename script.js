@@ -1,5 +1,5 @@
 $(function () {
-  const numberOfDaysToForecast = 5
+  const numberOfDaysToForecast = 5;
   var searchHistoryArray = [];
   const apiKey = "593c0385215d05c9409439d0b1361f3e";
   const inputField = $("#city-input");
@@ -7,10 +7,10 @@ $(function () {
   var todaysDate = moment().format("D MMMM YYYY");
   var inputSwitch;
   var listCity;
-  if (localStorage.getItem("Weather search history")){
+  if (localStorage.getItem("Weather search history")) {
     var arrayFromStorage = localStorage
-    .getItem("Weather search history")
-    .split(",");
+      .getItem("Weather search history")
+      .split(",");
   } else {
     var arrayFromStorage;
   }
@@ -43,8 +43,9 @@ $(function () {
     $("#search-history-items").empty();
 
     //if there is a search history in storage, display it
-    if (arrayFromStorage){
-    searchHistoryArray = arrayFromStorage;}
+    if (arrayFromStorage) {
+      searchHistoryArray = arrayFromStorage;
+    }
 
     for (let i = 0; i < searchHistoryArray.length; i++) {
       var aSearchTerm = $("<li>").text(searchHistoryArray[i]);
@@ -57,7 +58,7 @@ $(function () {
   function showWeather() {
     event.preventDefault();
 
-    //retrieves a termsearch term from either the search bar or one of the previous search history items, depending on what the user clicked
+    // retrieves a search term from either the search bar or one of the previous search history items, depending on what the user clicked. This is used in the query URL
     if (inputSwitch) {
       cityName = inputField.val();
     } else {
@@ -80,17 +81,22 @@ $(function () {
       url: currentWeatherQueryURL,
       method: "GET",
     }).then(function (response) {
-      //VALIDATION CHECK: Check if city name is valid
+      //Change the cityName from whatever the user typed in to what the API returns as the "name"
+      cityName = response.name;
+      //VALIDATION CHECK: Check if city name is valid =======================
       if (response) {
         if (searchHistoryArray.includes(cityName) === false) {
           //if city name is not present in the array
           populateSearchBar();
         }
-      } else { //TODO: no alert appears, idk if possible
+      } else {
+        //TODO: no alert appears, idk if possible
         alert("not a valid city name");
       }
 
-      //Display header showing City, Date, Icon
+      //If validation is ok, continue. ========================================
+
+      //Display header showing City, Date, and Icon
       cityNameAndDate = $("<h4>").text(response.name + " (" + todaysDate + ")");
       currentIconEl = $("<img>").attr(
         "src",
@@ -136,6 +142,24 @@ $(function () {
 
         currentUVLabel = $("<span>").text("UV Index: ");
         currentUVBadge = $("<span>").text(response.value);
+        console.log(response.value);
+        //apply UV colors
+        if (response.value < 3) {
+          // green
+          currentUVBadge.addClass("uv-low");
+        } else if (response.value >= 3 && response.value < 6) {
+          //yellow
+          currentUVBadge.addClass("uv-med");
+        } else if (response.value >= 6 && response.value < 8) {
+          //orange
+          currentUVBadge.addClass("uv-high");
+        } else if (response.value >= 8 && response.value <=10) {
+          //red
+          currentUVBadge.addClass("uv-very-high");
+        } else {
+          //purple
+          currentUVBadge.addClass("uv-extreme");
+        }
 
         $("#current-weather-data").append(currentUVLabel, currentUVBadge);
 
@@ -213,7 +237,7 @@ $(function () {
   function populateSearchBar() {
     $("#search-history-items").empty();
 
-    searchHistoryArray.push(inputField.val());
+    searchHistoryArray.push(cityName);
     console.log("searchHistoryArray: " + searchHistoryArray);
     localStorage.setItem("Weather search history", searchHistoryArray);
 
@@ -223,6 +247,4 @@ $(function () {
       $("#search-history-items").prepend(aSearchTerm);
     }
   }
-
-
 });

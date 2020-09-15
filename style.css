@@ -32,19 +32,52 @@ nav span {
     color: #0069da;
     text-decoration: none;
 }
+#current-city-name{
+    margin: 0px;
+}
 
 #current-weather{
     margin-bottom: 15px;
     width: 100%;
 }
 
-#current-city-name{
-    margin: 0px;
-    /* TODO: vertical align */
-}
-
 h4 {
     padding-left: 20px;
+}
+
+.uv-low {
+    background-color: #9CC601;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.uv-med {
+    background-color: #F9BC01;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.uv-high {
+    background-color: #F89003;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.uv-very-high {
+    background-color: #F54F24;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.uv-extreme {
+    background-color: #9E47CC;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .forecast {
