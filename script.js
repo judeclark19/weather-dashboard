@@ -27,7 +27,7 @@ $(function () {
       } else {
         //if includes is false, add input to search history
         inputSwitch = true;
-        populateSearchHistory();
+        // populateSearchHistory();
         showWeather();
       }
     }
@@ -94,6 +94,14 @@ $(function () {
       url: currentWeatherQueryURL,
       method: "GET",
     }).then(function (response) {
+      //validation
+      //if response.name does not exist
+      if (response.name){
+populateSearchHistory();
+      } else {
+        alert("this is an alert")
+      }
+
       //Display header showing City, Date, Icon
       cityNameAndDate = $("<h4>").text(response.name + " (" + todaysDate + ")");
       currentIconEl = $("<img>").attr(
