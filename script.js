@@ -8,6 +8,7 @@ $(function () {
   var todaysDate = moment().format("D MMMM YYYY");
   var inputSwitch;
   var listCity;
+  var arrayFromStorage = localStorage.getItem("Weather search history").split(",");
 
   //Click listeners
   // ===========================================================================
@@ -15,22 +16,34 @@ $(function () {
   //Listen to search button
   $("#search-btn").on("click", function () {
     event.preventDefault();
+    //Validations
+    //if blank, do nothing
+    //if not blank, check for presence in SHA
+    //if not present, add
+    //if present, do nothing
+    //input switch, showWeather, PopulateSearchBar
+if (inputField.val() === ""){ //if blank, do nothing
+  return
+} else {
 
-    if (inputField.val() === "") {//if blank, do nothing
-      return;
-    } else { //not blank, run validation checks
-      var includes = searchHistoryArray.includes(inputField.val());
-      if (includes) {
-        //if includes is true, show weather but do not add to search history
-        inputSwitch = true;
-        showWeather();
-      } else {
-        //if includes is false, add input to search history
-        inputSwitch = true;
-        // populateSearchHistory();
-        showWeather();
-      }
-    }
+  var includes = searchHistoryArray.includes(inputField.val());
+  console.log(includes)
+
+  if (includes){ //if includes is true, show weather but do not populate
+    inputSwitch = true
+    showWeather();
+  } else {//if includes is false, add input to the array
+    inputSwitch = true
+    populateSearchBar();
+    showWeather();
+
+  }
+
+  
+
+}
+
+    
   });
 
   //listen to the items in the search history
@@ -41,26 +54,31 @@ $(function () {
   });
   // ===========================================================================
 
-  function onLoad() {
-    
-    console.log(
-    Object.keys(localStorage)
-      )
-    for (let i = 0; i < Object.keys(localStorage).length; i++) {
-      searchHistoryArray.push(Object.keys(localStorage)[i]);
-      var aSearchTerm = $("<li>").text(Object.keys(localStorage)[i]);
+  function onLoad (){
+    $("#search-history-items").empty();
+
+    searchHistoryArray = arrayFromStorage
+
+    for (let i = 0; i < searchHistoryArray.length; i++) {
+      var aSearchTerm = $("<li>").text(searchHistoryArray[i]);
       aSearchTerm.addClass("list-group-item");
       $("#search-history-items").prepend(aSearchTerm);
     }
+// console.log(typeof Object.values(localStorage))
+// console.log(JSON.parse(Object.values(localStorage)))
   }
   onLoad();
 
-  function populateSearchHistory() {
+  function populateSearchBar() {
     $("#search-history-items").empty();
 
     searchHistoryArray.push(inputField.val());
-    console.log(searchHistoryArray);
-    localStorage.setItem(inputField.val(), inputField.val());
+    console.log("searchHistoryArray: "+searchHistoryArray);
+    localStorage.setItem("Weather search history", searchHistoryArray);
+    // var arrayFromStorage = localStorage.getItem("Weather search history").split(",");
+    console.log(
+      arrayFromStorage
+      )
 
     for (let i = 0; i < searchHistoryArray.length; i++) {
       var aSearchTerm = $("<li>").text(searchHistoryArray[i]);
@@ -94,14 +112,6 @@ $(function () {
       url: currentWeatherQueryURL,
       method: "GET",
     }).then(function (response) {
-      //validation
-      //if response.name does not exist
-      if (response.name){
-populateSearchHistory();
-      } else {
-        alert("this is an alert")
-      }
-
       //Display header showing City, Date, Icon
       cityNameAndDate = $("<h4>").text(response.name + " (" + todaysDate + ")");
       currentIconEl = $("<img>").attr(
