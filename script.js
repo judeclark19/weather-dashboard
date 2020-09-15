@@ -15,34 +15,22 @@ $(function () {
   //Listen to search button
   $("#search-btn").on("click", function () {
     event.preventDefault();
-    //Validations
-    //if blank, do nothing
-    //if not blank, check for presence in SHA
-    //if not present, add
-    //if present, do nothing
-    //input switch, showWeather, PopulateSearchBar
-if (inputField.val() === ""){ //if blank, do nothing
-  return
-} else {
 
-  var includes = searchHistoryArray.includes(inputField.val());
-  console.log(includes)
-
-  if (includes){ //if includes is true, show weather but do not populate
-    inputSwitch = true
-    showWeather();
-  } else {//if includes is false, add input to the array
-    inputSwitch = true
-    populateSearchBar();
-    showWeather();
-
-  }
-
-  
-
-}
-
-    
+    if (inputField.val() === "") {//if blank, do nothing
+      return;
+    } else { //not blank, run validation checks
+      var includes = searchHistoryArray.includes(inputField.val());
+      if (includes) {
+        //if includes is true, show weather but do not add to search history
+        inputSwitch = true;
+        showWeather();
+      } else {
+        //if includes is false, add input to search history
+        inputSwitch = true;
+        populateSearchHistory();
+        showWeather();
+      }
+    }
   });
 
   //listen to the items in the search history
@@ -53,12 +41,26 @@ if (inputField.val() === ""){ //if blank, do nothing
   });
   // ===========================================================================
 
-  function populateSearchBar() {
+  function onLoad() {
+    
+    console.log(
+    Object.keys(localStorage)
+      )
+    for (let i = 0; i < Object.keys(localStorage).length; i++) {
+      searchHistoryArray.push(Object.keys(localStorage)[i]);
+      var aSearchTerm = $("<li>").text(Object.keys(localStorage)[i]);
+      aSearchTerm.addClass("list-group-item");
+      $("#search-history-items").prepend(aSearchTerm);
+    }
+  }
+  onLoad();
+
+  function populateSearchHistory() {
     $("#search-history-items").empty();
 
     searchHistoryArray.push(inputField.val());
     console.log(searchHistoryArray);
-    localStorage.setItem("Search history", searchHistoryArray);
+    localStorage.setItem(inputField.val(), inputField.val());
 
     for (let i = 0; i < searchHistoryArray.length; i++) {
       var aSearchTerm = $("<li>").text(searchHistoryArray[i]);
