@@ -152,7 +152,7 @@ $(function () {
         url: currentUVQueryURL,
         method: "GET",
       }).then(function (response) {
-        $("#forecast-title").text("5-day Forecast");
+        
 
         currentUVLabel = $("<span>").text("UV Index: ");
         currentUVBadge = $("<span>").text(response.value);
@@ -191,6 +191,7 @@ $(function () {
         url: forecastQueryURL,
         method: "GET",
       }).then(function (response) {
+        $("#forecast-title").text("5-day Forecast");
         //Loop to create forecast cards. See HTML file for a reference of how this looks when built. (the loops tarts on index 1 because 0 is today I'm not trying to call today's weather)
         for (let i = 1; i < numberOfDaysToForecast + 1; i++) {
           //create a card
